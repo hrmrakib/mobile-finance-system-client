@@ -1,5 +1,3 @@
-import { FaRegEye } from "react-icons/fa";
-import { FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { IoHomeOutline } from "react-icons/io5";
 import { useForm } from "react-hook-form";
@@ -9,8 +7,7 @@ import useAxiosPublic from "../hooks/useAxiosPublic";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const Register = () => {
-  const [viewPassword, setViewPassword] = useState(false);
-  const [passwordError, setPasswordError] = useState("");
+  const [pinError, setPinError] = useState("");
   const [anyError, setAnyError] = useState("");
   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
@@ -24,39 +21,39 @@ const Register = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log({ data });
+    const { name, pin, mobileNumber, email } = data;
 
     setAnyError("");
-    setPasswordError("");
+    setPinError("");
 
-    // if (!/[A-Z]/.test(password)) {
-    //   setPasswordError("Password must have at least one uppercase letter");
-    //   return;
-    // } else if (!/[a-z]/.test(password)) {
-    //   setPasswordError("Password must have at least one lowercase letter");
-    //   return;
-    // } else if (password.length < 6) {
-    //   setPasswordError("Password length must be at least 6 characters");
-    //   return;
-    // } else {
-    //   setPasswordError("");
-    //   const menuRes = await axiosSecure.post("/user", userDetail);
+    if (pin.length > 5 || pin.length < 5) {
+      setPinError("Pin length must be 5 numbers");
+      return;
+    } else {
+      const userDetail = {
+        name,
+        pin,
+        mobileNumber,
+        email,
+      };
+      console.log({ userDetail });
+      const user = await axiosSecure.post("/register", userDetail);
 
-    //   console.log(menuRes.data);
+      console.log(user.data);
 
-    //   if (menuRes.data.insertedId) {
-    //     // show success popup
-    //     reset();
-    //     Swal.fire({
-    //       position: "top-end",
-    //       icon: "success",
-    //       title: `${data.name} is an user now!`,
-    //       showConfirmButton: false,
-    //       timer: 1500,
-    //     });
-    //     // navigate("/");
-    //   }
-    // }
+      if (user.data.insertedId) {
+        // show success popup
+        // reset();
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: `${data.name}, You user request is pending for admin approvel!`,
+          showConfirmButton: false,
+          timer: 3000,
+        });
+        // navigate("/");
+      }
+    }
   };
 
   return (
@@ -121,7 +118,9 @@ const Register = () => {
                 Your pin is required
               </span>
             )}
+            <p className='text-red-600 font-medium'>{pinError}</p>
           </div>
+
           <div className='relative mb-2'>
             <label
               htmlFor='mobileNumber'
