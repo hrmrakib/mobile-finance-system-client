@@ -173,7 +173,7 @@ const Register = () => {
 
         <p className='mt-2'>
           Already have an account? Please
-          <Link to='/signin' className='ml-2 font-semibold'>
+          <Link to='/login' className='ml-2 font-semibold'>
             Sign In
           </Link>
         </p>

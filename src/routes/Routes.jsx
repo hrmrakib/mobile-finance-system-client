@@ -10,14 +10,17 @@ const router = createBrowserRouter([
     element: <Login />,
   },
   {
-    path: "/",
+    path: "/register",
     element: <Register />,
   },
   {
     path: "/dashboard",
     element: <Dashboard />,
     errorElement: <h2>404 - Not Found!</h2>,
-    children: [{ path: "/dashboard/pendingUser", element: <PendingUser /> }],
+    children: [
+      { path: "/dashboard/pendingUser", element: <PendingUser /> },
+      { path: "/dashboard/allUsers", element: <PendingUser /> },
+    ],
   },
 ]);
 export default router;

@@ -8,6 +8,12 @@ const navLinks = (
     >
       All Pending Users
     </NavLink>
+    <NavLink
+      className='w-full py-2.5 hover:bg-gray-200 text-lg'
+      to='/dashboard/allUsers'
+    >
+      All Users
+    </NavLink>
   </div>
 );
 
@@ -36,7 +42,7 @@ const Dashboard = () => {
       {/* main content */}
       <div className='lg:ml-64 flex-1 lg:overflow-y-auto flex flex-col'>
         {/* top navbar */}
-        <header className='bg-white  shadow-md p-4'>
+        <header className='bg-white shadow-md p-4'>
           <div className='max-w-7xl mx-auto flex justify-between items-center'>
             {/* small device menu */}
             <div className='dropdown inline-block lg:hidden'>
@@ -64,16 +70,16 @@ const Dashboard = () => {
                 tabIndex={0}
                 className='menu menu-sm dropdown-content *:text-black  mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52'
               >
-                {true ? navLinks : navigate("/login")}
+                {/* {true ? navLinks : navigate("/login")} */}
 
                 {navLinks}
               </ul>
             </div>
 
-            <h1 className='text-xl md:text-2xl font-bold '>Dashboard</h1>
+            {/* <h1 className='text-xl md:text-2xl font-bold '>Dashboard</h1> */}
 
             {/* right-side profile */}
-            <div className='flex items-center gap-2'>
+            <div className='ml-auto flex items-center gap-2'>
               <div className='dropdown dropdown-end'>
                 <button
                   onClick={handleLogOut}

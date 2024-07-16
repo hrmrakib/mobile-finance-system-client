@@ -21,25 +21,25 @@ const Login = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    const { name, pin, mobileNumber, email } = data;
+    const { pin, identifier } = data;
 
     setAnyError("");
     setPinError("");
 
     if (pin.length > 5 || pin.length < 5) {
-      setPinError("Pin length must be 5 numbers");
+      setPinError("Pin length must be 5 digits");
       return;
     } else {
       const userDetail = {
-        name,
+        identifier,
         pin,
-        mobileNumber,
-        email,
       };
-      console.log({ userDetail });
-      const user = await axiosSecure.post("/register", userDetail);
+
+      const user = await axiosSecure.get("/login", userDetail);
 
       console.log(user.data);
+
+      setAnyError(user.data.message);
 
       if (user.data.insertedId) {
         // reset();
@@ -57,7 +57,7 @@ const Login = () => {
 
   return (
     <div className='bg-[#F2F3F3] bg-cover flex items-center justify-center min-h-screen'>
-      <div className='relative min-h-[calc(100vh-100px)] max-w-xl px-20 py-5 mx-auto bg-white border rounded-lg shadow'>
+      <div className='relative min-h-[calc(100vh-200px)] max-w-xl px-20 py-5 mx-auto bg-white border rounded-lg shadow'>
         <Link to='/' className='absolute left-1 top-1 border rounded-full p-2'>
           <IoHomeOutline className='text-2xl text-purple-600' />
         </Link>
@@ -79,21 +79,21 @@ const Login = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className='mb-2'>
             <label
-              htmlFor='email'
+              htmlFor='identifier'
               className='block mb-1 text-base font-semibold text-gray-900'
             >
               Your Email / Phone Number
             </label>
             <input
-              type='email'
-              id='email'
-              {...register("email", { required: true })}
+              type='text'
+              id='identifier'
+              {...register("identifier", { required: true })}
               className='shadow-sm bg-gray-50 outline-none border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5'
               placeholder='Enter email / phone number'
             />
-            {errors.email && (
+            {errors.identifier && (
               <span className='text-red-600 font-medium'>
-                Your email is required
+                Your email / phone number is required
               </span>
             )}
           </div>
@@ -122,13 +122,15 @@ const Login = () => {
 
           <button
             type='submit'
-            className='w-full text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 me-2 mb-2'
+            className='w-full text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center  dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 me-2 mb-2'
           >
             <span className='w-max mx-auto'>Sign In</span>
           </button>
+
+          <p className='text-red-600 font-medium'>{anyError}</p>
         </form>
 
-        <p className='mt-2'>
+        <p className='mt-2 text-gray-800'>
           New here? Please
           <Link to='/register' className='ml-2 font-semibold'>
             Register
