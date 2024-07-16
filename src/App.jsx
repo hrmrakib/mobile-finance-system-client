@@ -1,9 +1,9 @@
-import "./App.css";
+import Register from "./pages/Register";
 
 function App() {
   return (
     <>
-      <h2>Hello</h2>
+      <Register />
     </>
   );
 }
