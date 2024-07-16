@@ -42,7 +42,6 @@ const Register = () => {
       console.log(user.data);
 
       if (user.data.insertedId) {
-        // show success popup
         // reset();
         Swal.fire({
           position: "top-end",
@@ -66,7 +65,7 @@ const Register = () => {
         <div className='flex flex-col items-center justify-center mb-2'>
           <img
             className='size-12 mb-2'
-            src='https://i.ibb.co/MB4svxG/code.png'
+            src='https://i.ibb.co/K9mK4hh/taka-1.png'
             alt=''
           />
           <h2 className='text-2xl font-bold text-gray-800'>
